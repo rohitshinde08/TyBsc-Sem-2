@@ -1,0 +1,21 @@
+A {
+    display: block;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: black;
+}
+
+i {
+    color: red;
+    font-family: 'Arial', sans-serif;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
+p, q {
+    color: yellow;
+    font-family: 'Arial', sans-serif;
+    font-size: 12pt;
+    font-weight: bold;
+}
