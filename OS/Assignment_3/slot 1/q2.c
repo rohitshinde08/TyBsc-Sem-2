@@ -18,7 +18,7 @@ void main()
           for (j=i+1;j<n;j++)
           {
               dist = abs(req[j]-init);
-              if (dist<minD)
+              if (dist<=minD)
               {
                  minD = dist;
                  index = j;
