@@ -1,0 +1,35 @@
+<html>
+<body>
+<p id="demo"></p>
+<button onclick="myAlert()">ALERT</button>
+<button onclick="myConfirm()">CONFIRM</button>
+<button onclick="myPrompt()">PROMPT</button>
+<script>
+function myAlert()
+{
+         window.alert("Exams are near , Have you started prepared for?");
+}
+function myConfirm()
+{
+         var r =confirm("Press Button");
+         if (r==true)
+         {
+            document.getElementById("demo").innerHTML
+            x="You passed OK!";
+         }
+         else
+         {
+            x="You pressed Cancle!";
+         }
+}
+function myPrompt()
+{
+         var person=prompt("Enter name :","rohit");
+         if (person!=null)
+         {
+            document.getElementById("demo").innerHTML="Hello "+person+" How are you!";
+         }
+}
+</script>
+</body>
+</html>

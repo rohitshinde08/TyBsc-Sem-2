@@ -1,0 +1,22 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h2>Example Content</h2>
+  <p id="paragraph">This is an example paragraph.</p>
+  <ol id="numbered-list">
+    <li>rohit</li>
+    <li>omkar</li>
+    <li>varad</li>
+  </ol>
+</body>
+<script>
+  $(document).ready(function(){
+   
+    $("#paragraph").append(" Appended text to paragraph.");
+
+    $("#numbered-list").append("<li>pranit</li>");
+});
+</script>
+</html>
