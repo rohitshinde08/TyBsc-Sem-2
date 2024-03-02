@@ -1,0 +1,658 @@
+Ass 3 java data
+
+
+A1
+
+import javax.swing.*;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+class setA1
+{
+   public static void main(String args[])
+   {
+      Connection con=null;
+      Statement  stm=null;
+      ResultSet rs=null;
+      try
+      {
+         con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty23","ty23","ty23");
+         stm=con.createStatement();
+         JFrame frame=new JFrame("Project");
+         JTable table=new JTable();
+         DefaultTableModel model=new DefaultTableModel(new Object[]{"ID","Name","Description","Status"},0);
+         rs=stm.executeQuery("Select * from Project");
+         while(rs.next())
+         {
+            int Id=rs.getInt("ID");
+            String Name=rs.getString("Name");
+            String des=rs.getString("Description");
+            String Status=rs.getString("Status");
+            model.addRow(new Object[]{Id,Name,des,Status});
+         }
+         table.setModel(model);
+         JScrollPane sp=new JScrollPane(table);
+         frame.add(sp);
+         frame.pack();
+         frame.setVisible(true);
+         rs.close();
+         stm.close();
+         con.close();
+         
+      }
+      catch(SQLException e)
+      {
+         System.out.println("Error"+e.getMessage());
+      }
+   }
+}
+
+
+
+-- create table project(p_id int primary key, p_name char(34),p_description char(56),p_status char(34));
+
+-- INSERT INTO project VALUES(1,'abc','java project','completed');
+-- INSERT INTO project VALUES(2,'kpl','php project','completed');
+-- INSERT INTO project VALUES(3,'lmn','c project','completed');
+-- INSERT INTO project VALUES(4,'xyz','ruby project','completed');
+SELECT * FROM project;
+
+-- delete FROM project where p_id >=7;
+
+
+
+
+A2
+
+import java.sql.*;
+class setA2
+{
+   public static void main(String args[])
+   {
+      ResultSet rs=null;
+      Connection con=null;
+      try
+      {
+         con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty23","ty23","ty23");
+         DatabaseMetaData dbmd=con.getMetaData();
+         System.out.println("Database product name="+dbmd.getDatabaseProductName());
+         System.out.println("User name="+dbmd.getUserName());
+         System.out.println("Database driver name="+dbmd.getDriverName());
+         System.out.println("Database driver version="+dbmd.getDriverVersion());
+         System.out.println("Database version="+dbmd.getDriverMajorVersion());
+         rs=dbmd.getTables(null,null,null,new String[]{"TABLE"});
+         System.out.println("List of tables...");
+         while(rs.next())
+         {
+            String tblName=rs.getString("TABLE_NAME");
+            System.out.println("Table:"+tblName);
+         }
+         rs.close();
+         con.close();
+         
+      }
+      catch(SQLException e)
+      {
+         System.out.println("Error"+e.getMessage());
+      }
+   }
+}
+/*
+Output
+ty23@pc20:~/JAVA2/Assignment3$ javac setA2.java
+ty23@pc20:~/JAVA2/Assignment3$ java -cp .:/data/jdbc/psql.jar setA2
+Database product name=PostgreSQL
+User name=ty23
+Database driver name=PostgreSQL JDBC Driver
+Database driver version=42.5.4
+Database version=42
+List of tables...
+Table:donor
+Table:project
+ty23@pc20:~/JAVA2/Assignment3$ 
+
+*/
+
+
+
+A3
+
+
+
+import java.sql.*;
+class setA3
+{
+   public static void main(String args[])
+   {
+      ResultSet rs=null;
+      Connection con=null;
+      Statement stm=null;
+      try
+      {
+         con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty23","ty23","ty23");
+         stm=con.createStatement();
+         rs=stm.executeQuery("Select * from Donor");
+         ResultSetMetaData rsmd=rs.getMetaData();
+         int n=rsmd.getColumnCount();
+         for(int i=1;i<=n;i++)
+         {
+            System.out.println("Column No:"+i);
+            System.out.println("Column Name:"+rsmd.getColumnName(i));
+            System.out.println("Column Type:"+rsmd.getColumnTypeName(i));
+            System.out.println("Column size:"+rsmd.getColumnDisplaySize(i));
+         }
+         rs.close();
+         stm.close();
+         con.close();
+      }
+      catch(SQLException e)
+      {
+         System.out.println("Error"+e.getMessage());
+      }
+   }
+}
+/*
+OUTPUT
+ty23@pc20:~/JAVA2/Assignment3$ javac setA3.java
+ty23@pc20:~/JAVA2/Assignment3$ java -cp .:/data/jdbc/psql.jar setA3
+Column No:1
+Column Name:donor_id
+Column Type:int4
+Column size:11
+Column No:2
+Column Name:name
+Column Type:varchar
+Column size:50
+Column No:3
+Column Name:bloodgroup
+Column Type:varchar
+Column size:50
+Column No:4
+Column Name:age
+Column Type:int4
+Column size:11
+ty23@pc20:~/JAVA2/Assignment3$ 
+
+*/
+
+
+-- create table donor(did int, dname char(22),daddr varchar(22));
+
+-- insert into donor VALUES(1,'AAA','zzz');
+-- insert into donor VALUES(2,'BBB','yyy');
+-- insert into donor VALUES(3,'CCC','xxx');
+-- insert into donor VALUES(4,'DDD','www');
+
+SELECT * from donor;
+
+
+B1
+
+
+
+import java.sql.*;
+import java.util.*;
+class setB1
+{
+   public static void main(String args[])
+   {
+      ResultSet rs=null;
+      Connection con=null;
+      Statement stm=null;
+      PreparedStatement pstm=null;
+      try
+      {
+         con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty23","ty23","ty23");
+         stm=con.createStatement();
+         Scanner sc=new Scanner(System.in);
+         System.out.println("\nMobile Information\n");
+         do{
+            System.out.println("\n1:Insert\n2:Modify\n3:DElete\n4:Search\n5:View All\n6:Exit\n");
+            System.out.println("Enter your choice:");
+            int ch=sc.nextInt();
+            switch(ch)
+            {
+               case 1:pstm=con.prepareStatement("insert into Mobile values(?,?,?,?,?,?,?,?,?)");
+                      System.out.println("Enter model no:");
+                      int mno=sc.nextInt();
+                      pstm.setInt(1,mno);
+                      sc.nextLine();
+                      System.out.println("Enter model name:");
+                      String name=sc.nextLine();
+                      pstm.setString(2,name);
+                      System.out.println("Enter model color:");
+                      String color=sc.nextLine();
+                      pstm.setString(3,color);
+                      System.out.println("Enter sim type:");
+                      String stype=sc.nextLine();
+                      pstm.setString(4,stype);
+                      System.out.println("Enter network type:");
+                      String ntype=sc.nextLine();
+                      pstm.setString(5,ntype);
+                      System.out.println("Enter Battery Capacity:");
+                      String battery=sc.nextLine();
+                      pstm.setString(6,battery);
+                      System.out.println("Enter internal storage:");
+                      String storage=sc.nextLine();
+                      pstm.setString(7,storage);
+                      System.out.println("Enter RAM:");
+                      String ram=sc.nextLine();
+                      pstm.setString(8,ram);
+                      System.out.println("Enter processor type:");
+                      String processor=sc.nextLine();
+                      pstm.setString(9,processor);
+                      int result=pstm.executeUpdate();
+                      System.out.println(result+" Record inserted\n");
+                      break;
+               case 2:pstm=con.prepareStatement("update mobile set model_name=? where model_no=?");
+                      System.out.println("Enter model no for update record:");
+                      int no=sc.nextInt();
+                      pstm.setInt(2,no);
+                      sc.nextLine();
+                      System.out.println("Enter updated model name:");
+                      String mname=sc.nextLine();
+                      pstm.setString(1,mname);
+                      int result2=pstm.executeUpdate();
+                      System.out.println(result2+" REcord updated\n");
+                      break;
+               case 3:pstm=con.prepareStatement("Delete from Mobile where model_no=?");
+                      System.out.println("Enter the model no to be deleted:");
+                      int m=sc.nextInt();
+                      pstm.setInt(1,m);
+                      int result3=pstm.executeUpdate();
+                      System.out.println(result3+" Record Deleted Successfully");
+                      break;
+               case 4:pstm=con.prepareStatement("Select * from Mobile where model_no=?");
+                      System.out.println("Enter model no for search record:");
+                      int mn=sc.nextInt();
+                      pstm.setInt(1,mn);
+                      rs=pstm.executeQuery();
+                      System.out.println("\n----------------------------------------------------------------------------------------\n");
+                      while(rs.next())
+                      {
+                         System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getString(4)+"\t"+rs.getString(5)+"\t"+
+                         rs.getString(6)+"\t"+rs.getString(7)+"\t"+rs.getString(8)+"\t"+rs.getString(9)+"\t");
+                      }
+                      System.out.println("\n----------------------------------------------------------------------------------------\n");
+                      break;
+               case 5:pstm=con.prepareStatement("Select * from Mobile");
+                      rs=pstm.executeQuery();
+                      System.out.println("\n----------------------------------------------------------------------------------------\n");
+                      while(rs.next())
+                      {
+                         System.out.println(rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3)+"\t"+rs.getString(4)+"\t"+rs.getString(5)+"\t"+
+                         rs.getString(6)+"\t"+rs.getString(7)+"\t"+rs.getString(8)+"\t"+rs.getString(9)+"\t");
+                      }
+                      System.out.println("\n----------------------------------------------------------------------------------------\n");
+                      break;
+               case 6:System.exit(1);
+                      rs.close();
+                      stm.close();
+                      pstm.close();
+                      con.close();
+                      sc.close();
+            }
+         }
+         while(true);
+      }
+      catch(SQLException e)
+      {
+         System.out.println("Error"+e.getMessage());
+      }
+   }
+}
+/*
+OUTPUT
+ty23@pc20:~/JAVA2/Assignment3$ javac setB1.java
+ty23@pc20:~/JAVA2/Assignment3$ java -cp .:/data/jdbc/psql.jar setB1
+
+Mobile Information
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+4
+Enter model no for search record:
+1004
+
+----------------------------------------------------------------------------------------
+
+1004	IQOO 11	black	nano	5G	5000mh	256GB	16GB	SD 8 gen2	
+
+----------------------------------------------------------------------------------------
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+5
+
+----------------------------------------------------------------------------------------
+
+1001	poco m4 pro	yellow	macro	5G	3000mh	128GB	8GB	Snapdragon 550	
+1003	iPhone14	copper	mini	5G	2500mh	128GB	4GB	SD 8 gen2	
+1004	IQOO 11	black	nano	5G	5000mh	256GB	16GB	SD 8 gen2	
+
+----------------------------------------------------------------------------------------
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+2
+Enter model no for update record:
+1001
+Enter updated model name:
+OPPO
+1 REcord updated
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+5
+
+----------------------------------------------------------------------------------------
+
+1003	iPhone14	copper	mini	5G	2500mh	128GB	4GB	SD 8 gen2	
+1004	IQOO 11	black	nano	5G	5000mh	256GB	16GB	SD 8 gen2	
+1001	OPPO	yellow	macro	5G	3000mh	128GB	8GB	Snapdragon 550	
+
+----------------------------------------------------------------------------------------
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+1
+Enter model no:
+5678
+Enter model name:
+vivo
+Enter model color:
+red
+Enter sim type:
+micro
+Enter network type:
+4G
+Enter Battery Capacity:
+4500mah
+Enter internal storage:
+64GB
+Enter RAM:
+6GB
+Enter processor type:
+snapdragon 777
+1 Record inserted
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+5
+
+----------------------------------------------------------------------------------------
+
+1003	iPhone14	copper	mini	5G	2500mh	128GB	4GB	SD 8 gen2	
+1004	IQOO 11	black	nano	5G	5000mh	256GB	16GB	SD 8 gen2	
+1001	OPPO	yellow	macro	5G	3000mh	128GB	8GB	Snapdragon 550	
+5678	vivo	red	micro	4G	4500mah	64GB	6GB	snapdragon 777	
+
+----------------------------------------------------------------------------------------
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+3
+Enter the model no to be deleted:
+1003
+1 Record Deleted Successfully
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+5
+
+----------------------------------------------------------------------------------------
+
+1004	IQOO 11	black	nano	5G	5000mh	256GB	16GB	SD 8 gen2	
+1001	OPPO	yellow	macro	5G	3000mh	128GB	8GB	Snapdragon 550	
+5678	vivo	red	micro	4G	4500mah	64GB	6GB	snapdragon 777	
+
+----------------------------------------------------------------------------------------
+
+
+1:Insert
+2:Modify
+3:DElete
+4:Search
+5:View All
+6:Exit
+
+Enter your choice:
+6
+ty23@pc20:~/JAVA2/Assignment3$ 
+
+
+*/
+create table mobile(mno int ,name char(20),color char(20),sim char(20), Battery int, internal int , ram int , pr char(25));
+
+select * from mobile;
+
+
+B2
+
+
+import javax.swing.*;
+import java.sql.*;
+import java.awt.*;
+import java.awt.event.*;
+class InvalidBirthDateException extends Exception
+{
+  String msg="Invalid Date Exception";
+  public String toString()
+  {
+     return msg;
+  }
+}
+public class setB2 extends JFrame implements ActionListener
+{
+   JTextField aadhar,byear,phone,hosp;
+   JPanel p1,p2,p3,p4;
+   JButton add,update,delete,view,search;
+   JRadioButton r1,r2,r3,r4,r5,r6,r7,r8;
+   ButtonGroup bg,bg1,bg2; 
+   JComboBox hos;
+   String s[]={"criticare hospital","Tambe hospital","Sahyadri hospital"};
+   setB2()
+   {
+      setTitle("Cowin Registration");
+      setSize(800,600);
+      setLayout(new GridLayout(8,2,40,40));
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+      JLabel aadharno=new JLabel("Aadhar card number");
+      add(aadharno);
+      aadhar=new JTextField(10);
+      add(aadhar);
+      JLabel Byear=new JLabel("Birth year");
+      add(Byear);
+      byear=new JTextField(10);
+      add(byear);
+      JLabel phoneno=new JLabel("Mobile no");
+      add(phoneno);
+      phone=new JTextField(10);
+      add(phone);
+      p1=new JPanel();
+      p1.setLayout(new FlowLayout());
+      JLabel AgeGrp=new JLabel("Age Group");
+      add(AgeGrp);
+      r1=new JRadioButton("18 & above");
+      p1.add(r1);
+      r1.setActionCommand("18 & above");
+      r2=new JRadioButton("45 & above");
+      p1.add(r2);
+      r2.setActionCommand("45 & above");
+      add(p1);
+      JLabel hospital=new JLabel("Select hospital");
+      add(hospital);
+      hos=new JComboBox(s);
+      add(hos);
+      p2=new JPanel();
+      p2.setLayout(new FlowLayout());
+      JLabel vaccine=new JLabel("Vaccines");
+      add(vaccine);
+      r3=new JRadioButton("Covishield");
+      p2.add(r3);
+      r3.setActionCommand("Covishield");
+      r4=new JRadioButton("Covaxin");
+      p2.add(r4);
+      r4.setActionCommand("Covaxin");
+      r5=new JRadioButton("Sputnik V");
+      p2.add(r5);
+      r5.setActionCommand("Sputnik V");
+      add(p2);
+      
+      p3=new JPanel();
+      p3.setLayout(new FlowLayout());
+      JLabel time=new JLabel("Time slot");
+      add(time);
+      r6=new JRadioButton("Morning");
+      p3.add(r6);
+      r6.setActionCommand("Morning");
+      r7=new JRadioButton("Afternoon");
+      p3.add(r7);
+      r7.setActionCommand("Afternoon");
+      r8=new JRadioButton("Evening");
+      p3.add(r8);
+      r8.setActionCommand("Evening");
+      add(p3);
+      
+      p4=new JPanel();
+      p3.setLayout(new FlowLayout());
+      add=new JButton("Add");
+      add(add);
+      update=new JButton("Update");
+      add(update);
+      delete=new JButton("Delete");
+      add(delete);
+      view=new JButton("View");
+      add(view);
+      search=new JButton("Search");
+      add(search);
+      
+      add.addActionListener(this);
+      bg=new ButtonGroup();
+      bg.add(r1);
+      bg.add(r2);
+      bg1=new ButtonGroup();
+      bg1.add(r4);
+      bg1.add(r3);
+      bg1.add(r5);
+      bg2=new ButtonGroup();
+      bg2.add(r6);
+      bg2.add(r7);
+      bg2.add(r8);
+      setVisible(true);
+   }
+   public void actionPerformed(ActionEvent ae)
+   {
+     if(ae.getSource()==add)
+     {
+        String adharno=(aadhar.getText());
+        int year=Integer.parseInt(byear.getText());
+        String phNo=(phone.getText());
+        String hospital=(String)(hos.getSelectedItem());
+        String age=bg.getSelection().getActionCommand();
+        String vaccine=bg1.getSelection().getActionCommand();
+        String timestamp=bg2.getSelection().getActionCommand();
+        try
+        {
+          if(year==0000)
+          {
+            throw new InvalidBirthDateException();
+          }
+          else
+          {
+             Connection con=null;
+             PreparedStatement pstm=null;
+      
+            try
+            {
+                con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty23","ty23","ty23");
+                pstm=con.prepareStatement("insert into cowin values(?,?,?,?,?,?,?)");
+                pstm.setString(1,adharno);
+                pstm.setInt(2,year);
+                pstm.setString(3,phNo);
+                pstm.setString(4,hospital);
+                pstm.setString(5,age);
+                pstm.setString(6,vaccine);
+                pstm.setString(7,timestamp);
+                int result=pstm.executeUpdate();
+                if(result==1)
+                {
+                   JOptionPane.showMessageDialog(null,"Successfully Inserted",hospital,JOptionPane.INFORMATION_MESSAGE);
+                }
+                pstm.close();
+                con.close();
+          }
+          catch(Exception e)
+          {
+             JOptionPane.showMessageDialog(null,e,"ERROR OCCURED",JOptionPane.ERROR_MESSAGE);
+          }
+        }
+      }
+      catch(InvalidBirthDateException e)
+      {
+         JOptionPane.showMessageDialog(null,e,"ERROR OCCURED",JOptionPane.ERROR_MESSAGE);
+      }
+    }
+  }
+  public static void main(String args[])
+  {
+    new setB2();
+  }
+}
+
+
