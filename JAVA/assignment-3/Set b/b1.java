@@ -137,3 +137,46 @@ class b1
       
    }
 }
+create table mobile(m_id int primary key, m_name char(34),m_colour char(56),m_sim char(34),m_network char(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
+ERROR:  syntax error at or near ")"
+LINE 1: ...ar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
+                                                                     ^
+ty36=> create table mobile(m_id int primary key, m_name char(34),m_colour char(56),m_sim char(34),m_network char(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor varchar(15);
+ty36(> create table mobile(m_id int primary key, m_name char(34),m_colour char(56),m_sim char(34),m_network char(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor varchar(15));
+ty36(> create table mobile(m_id int primary key, m_name varchar(34),m_colour varchar(56),m_sim varchar(34),m_network varchar(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
+ty36(> create table mobile(m_id int primary key, m_name varchar(34),m_colour varchar(56),m_sim varchar(34),m_network varchar(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor varchar(35));
+ty36(> ^C
+ty36=> create table mobile(m_id int primary key, m_name char(34),m_colour char(56),m_sim char(34),m_network char(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
+ERROR:  syntax error at or near ")"
+LINE 1: ...ar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
+                                                                     ^
+ty36=> create table mobile(m_id int primary key, m_name char(34),m_colour char(56),m_sim char(34),m_network char(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor varchar)^C
+ty36=> create table mobile(m_id int primary key, m_name varchar(34),m_colour varchar(56),m_sim varchar(34),m_network varchar(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor varchar(34));
+CREATE TABLE
+ty36=> insert into mobile values(1,'oppo','red','airtel','5G','2100h','256GB','16GB','snpadragon'); 
+INSERT 0 1
+ty36=> insert into mobile values(2,'apple','green','idea','4G','5000h','512GB','8GB','snpadragon'); 
+INSERT 0 1
+ty36=> insert into mobile values(3,'realme','white','vi','3G','3500h','512GB','32GB','mac') 
+ty36-> insert into mobile values(4,'samsung','gold','jio','4G','5000h','512GB','164GB','snap'); 
+ERROR:  syntax error at or near "insert"
+LINE 2: insert into mobile values(4,'samsung','gold','jio','4G','500...
+        ^
+ty36=> insert into mobile values(3,'realme','white','vi','3G','3500h','512GB','32GB','mac') 
+insert into mobile values(4,'samsung','gold','jio','4G','5000h','512GB','164GB','sn^Z
+[1]+  Stopped                 psql -h 192.168.1.254 -U ty36
+ty36@pc38:~/roll no 36/JAVA-2/assignment-3$ psql -h 192.168.1.254 -U ty36
+Password for user ty36: 
+psql (13.8 (Debian 13.8-0+deb11u1))
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+ty36=> select * from mobile
+ty36-> ;
+ m_id | m_name | m_colour | m_sim | m_network | m_battery | m_storage | m_ram | m_processor 
+------+--------+----------+-------+-----------+-----------+-----------+-------+-------------
+    4 | iphone | black    | 3     | 4G        | 5000h     | 126GB     | 8GB   | snap
+    2 | varad  | green    | idea  | 4G        | 5000h     | 512GB     | 8GB   | snpadragon
+(2 rows)
+
+ty36=> \q
