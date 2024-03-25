@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title> array </title>
+      <style>
+        #box{
+              position:relative;
+              width:75%;
+              margin:50px 50px;
+              padding:35px 35px;
+              border-radius:15px;
+              background-color:lightblue;
+       }
+     </style>
+  </head>
+  <body>
+  <div id="box">
+  original array:('1','2','3','4',5')
+  <form action="q2.php" method="POST"><br><br>
+       
+       <p>which operation you want to perform</p>
+       <input type="radio" name="op" value="ins">
+          <label for="length"> insert an element in stack(push) </label><br>
+          enter an element:<input type="text" name="se"><br>
+       <input type="radio" name="op" value="del">
+          <label for="countb"> delete an element from stack(pop) </label> <br>  
+       <input type="radio" name="op" value="sdis">
+          <label for="lowercase"> display the contents of stack </label> <br> 
+       <input type="radio" name="op" value="enq">
+          <label for="pad"> insert an element in queue(enqueue) </label><br>
+          enter an element:<input type="text" name="qe"><br>
+       <input type="radio" name="op" value="deq">
+          <label for="white_space"> display the content of queue </label><br>
+       <input type="radio" name="op" value="qdis">
+          <label for="reverse"> insert an element in queue </label> <br><br>           
+       <input type="submit">
+   
+</div>
+</body>
+</html>    
+                            

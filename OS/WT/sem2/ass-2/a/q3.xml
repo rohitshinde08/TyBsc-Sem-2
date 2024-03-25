@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/cs" href="q3.css"?>;
+<BookInfo>
+  
+  <book>
+    <bookno> 1</bookno>
+    <bookname>java</bookname>
+    <authorname>balguru Swami</authorname>
+    <price> 250 </price>
+    <year> 2006 </year>
+  </book> 
+ <book>
+    <bookno> 2</bookno>
+    <bookname>c</bookname>
+    <authorname>denis Ritchie</authorname>
+    <price> 500 </price>
+    <year> 1971 </year>
+  </book> 
+</BookInfo>    

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title> jquery examle</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+</style>
+<script>
+  $(document).ready(function()
+  {
+    $('#afterBtn').click(function()
+    {
+      $('#box').after("<h1> hello !!!</h1>");
+    });
+    $('#beforeBtn').click(function()
+    {
+      $('#box').before("<li>new item</li>");
+    });
+  });
+</script>
+</head>
+<body>
+<div>
+<h2> text box </h2>
+<img id="box" src="abc.jpg">
+</div>
+<button id="afterBtn">after </button>
+<button id="beforeBtn">before </button>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<html>
+<head>
+</head>
+<body>
+<form name="Membership_login" onsubmit="Validfunction()" method="post">
+<center>
+<h3> Membership form</h3>
+username:<input typ="text" name="user" id="username"><br><br>
+Password:<input type="password" name="pass" id="password"><br><br>
+
+<button type="submit" value="login"> Login</button>
+</center>
+</form>
+
+<script type="text/javascript">
+
+function Validfunction()
+{
+  var user=document.getElementById("username").value;
+  var pass=document.getElementById("password").value;
+  if(user==="prati" && pass==="prati128")
+    alert("login successfully");
+  else if(user==null || pass=='')
+    alert("Empty username or password field");
+  else
+    alert("invalild username or password");
+}
+</script>
+</body>
+</html>
+        
+  0

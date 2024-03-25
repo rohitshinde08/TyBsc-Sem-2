@@ -1,0 +1,33 @@
+<html>
+<head>
+<title> jquery examle</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+</style>
+<script>
+  $(document).ready(function()
+  {
+    $('#appendBtn').click(function()
+    {
+      $('#box').append("<h1> hello !!!</h1>");
+    });
+    $('#appendBtn').click(function()
+    {
+      $('#numberedList').append("<li>new item</li>");
+    });
+  });
+</script>
+</head>
+<body>
+<div id="box">
+<h2> text box </h2>
+<p id="paragraph"> text </p>
+</div>
+<ol id="numberedList">
+<li> item 1</li>
+<li> item 2</li>
+<li> item 3</li>
+</ol>     
+<button id="appendBtn"> Append </button>
+</body>
+</html>

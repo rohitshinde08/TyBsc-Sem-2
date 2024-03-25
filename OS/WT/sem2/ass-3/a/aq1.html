@@ -1,0 +1,35 @@
+<html>
+<head>
+<title> welcome </title>
+</head>
+<body>
+<h1 id="ch"> Welcome </h1>
+<button onclick="promptfunction()"> Prompt </button><br><br>
+<button onclick="confirmfunction()"> Confirm </button><br><br>
+<button onclick="alertfunction()"> alert </button></br></br>
+
+<script type="text/javascript">
+ function promptfunction()
+ {
+    var temp=prompt("Exam are never,have you started preparing for it? yes or no ","no");
+    if(temp=="no")
+      document.getElementById("ch").innerHTML="Start preparing for the exam";
+    else
+      document.getElementById("ch").innerHTML="Best of luck";
+ }
+ function confirmfunction()
+ {
+    var temp=confirm("Exam are never,have you started preparing for it? ");
+    if(temp==false)
+      document.getElementById("ch").innerHTML="Start preparing for the exam";
+    else
+      document.getElementById("ch").innerHTML="Best of luck";
+ }    
+ function alertfunction()
+ {
+    alert("Exam are never,have you started preparing for it? yes or no ","no");
+    document.getElementById("ch").innerHTML="Start preparing for the exam";
+ }  
+</script>
+</body>
+</html>    
