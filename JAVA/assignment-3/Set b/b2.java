@@ -134,7 +134,7 @@ public class setB2 extends JFrame implements ActionListener
       
             try
             {
-                con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty23","ty23","ty23");
+                con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty49","ty49","ty49");
                 pstm=con.prepareStatement("insert into cowin values(?,?,?,?,?,?,?)");
                 pstm.setString(1,adharno);
                 pstm.setInt(2,year);
