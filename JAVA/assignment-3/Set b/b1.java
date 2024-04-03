@@ -10,7 +10,7 @@ class b1
       PreparedStatement pstm=null;
       try
       {
-         con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty36","ty36","ty36");
+         con=DriverManager.getConnection("jdbc:postgresql://192.168.1.254/ty49","ty49","ty49");
          stm=con.createStatement();
          Scanner sc=new Scanner(System.in);
          System.out.println("\nMobile Information\n");
@@ -137,6 +137,7 @@ class b1
       
    }
 }
+/*
 create table mobile(m_id int primary key, m_name char(34),m_colour char(56),m_sim char(34),m_network char(34),m_battery varchar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
 ERROR:  syntax error at or near ")"
 LINE 1: ...ar(15),m_storage varchar(15),m_ram varchar(34),m_processor);
